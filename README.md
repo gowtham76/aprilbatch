@@ -8,15 +8,18 @@ This is a simple Java application that demonstrates how to build a JAR package u
 aprilbatch/
 ├── .github/
 │   └── workflows/
-│       └── build.yml          # GitHub Actions workflow
+│       └── build.yml          # GitHub Actions workflow with SonarCloud
 ├── src/
 │   └── main/
 │       └── java/
 │           └── com/
 │               └── example/
 │                   └── app/
-│                       └── App.java    # Main application
+│                       ├── App.java         # Main application
+│                       └── Calculator.java  # Calculator with duplicates
 ├── pom.xml                    # Maven configuration
+├── sonar-project.properties   # SonarCloud configuration
+├── DUPLICATION-GUIDE.md       # Guide to intentional duplications
 └── .gitignore                 # Git ignore rules
 ```
 
@@ -62,8 +65,46 @@ The workflow (`.github/workflows/build.yml`) automatically:
    - Checks out the code
    - Sets up JDK 11
    - Builds the project with Maven
+   - **Runs SonarCloud code scanning** (detects duplications, code smells, bugs)
    - Uploads the JAR as a GitHub artifact
    - Displays artifact information
+
+## Code Quality Scanning with SonarCloud
+
+This project includes **intentional code duplications** to demonstrate code quality scanning.
+
+### What Gets Scanned:
+
+- **Code Duplications**: Detects duplicate code blocks across files
+- **Code Smells**: Identifies maintainability issues
+- **Bugs**: Finds potential bugs
+- **Security Vulnerabilities**: Checks for security issues
+- **Code Coverage**: Measures test coverage (if tests exist)
+
+### Viewing Scan Results:
+
+1. After pushing to GitHub, the workflow runs automatically
+2. Visit your SonarCloud dashboard: `https://sonarcloud.io/project/overview?id=jatinbhalla1991_aprildemo`
+3. Check these tabs:
+   - **Duplications**: See duplicated code blocks
+   - **Code Smells**: Review maintainability issues
+   - **Issues**: View all detected problems
+
+### Intentional Duplications:
+
+This codebase contains **intentional duplicate code** for testing purposes:
+
+- **App.java**: Three methods (`processUserData`, `processEmployeeData`, `processCustomerData`) with identical logic
+- **App.java**: Two calculation methods (`calculateTotal`, `calculateSum`) with same logic
+- **Calculator.java**: Multiple duplicate methods for addition, multiplication, and validation
+
+See [DUPLICATION-GUIDE.md](DUPLICATION-GUIDE.md) for detailed information about the duplications and how to fix them.
+
+### Running SonarCloud Locally:
+
+```bash
+mvn clean verify sonar:sonar -Dsonar.token=YOUR_SONAR_TOKEN
+```
 
 ## Downloading the Artifact
 
