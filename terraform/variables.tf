@@ -1,12 +1,13 @@
-variable ami_id {
+variable "ami_id" {
   description = "The ID of the AMI to use for the EC2 instance."
   type        = string
 }
 
-variable instance_type {
+variable "instance_type" {
   description = "Map of instance names to instance types. Each entry creates one EC2 instance."
   type        = map(string)
-  default     = {
+  default = {
     "instance1" = "t2.micro"
   }
 }
+
