@@ -11,3 +11,14 @@ variable "instance_type" {
   }
 }
 
+variable "bucket" {
+  description = "The name of the S3 bucket to create."
+  type        = string
+}
+
+variable "create_s3" {
+  description = "Set to true to create S3 bucket, false to skip."
+  type        = bool
+  default     = false
+}
+
